@@ -3,7 +3,7 @@
 #include <time.h>
 
 /**
- * main - Entry point
+ * main - Prints the alphabetic
  *
  * Return: Always 0 (Success)
  */
@@ -13,6 +13,7 @@ int main(void)
 
 	for (alphabet = 'a'; alphabet <= 'z'; alphabet++)
 		putchar(alphabet);
-		putchar('\n');
+
+	putchar('\n');
 	return (0);
 }
