@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _puts - prints a string
+ * _puts -> prints a string
  * @str: string to print
  *
  * Description: prints a string
@@ -13,8 +13,8 @@ void _puts(char *str)
 
 	while (*(str + i) != '\0')
 	{
-		putchar(*(str + i));
+		_putchar(*(str + i));
 		i++;
 	}
-	putchar(10);
+	_putchar(10);
 }
