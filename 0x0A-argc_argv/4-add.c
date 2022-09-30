@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlid.h>
+#include <ctype.h>
 
 /**
  * main - Print result of adding given arguments
