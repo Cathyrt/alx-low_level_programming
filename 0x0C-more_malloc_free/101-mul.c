@@ -171,7 +171,7 @@ void add_nums(char *final_prod, char *next_prod, int next_len)
 	}
 
 	if (tens)
-		final_prod = (tens % 10) + '0';
+		*final_prod = (tens % 10) + '0';
 }
 
 /**
