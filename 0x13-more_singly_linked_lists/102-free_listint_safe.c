@@ -5,48 +5,30 @@
  * free_listint_safe - Free a list that may or may not loop,
  * set start of list to NULL
  * @h: Pointer to pointer to the start of the list
- * Return: Size of the list that has been freed
+ * Return: size of free'd list (in nodes?)
  */
 size_t free_listint_safe(listint_t **h)
 {
-	listint_t *killnode;
-	listint_t *current;
-	listadd_t *headadd;
-	listadd_t *checker;
-	size_t count;
+	size_t nodeCount = 0;
+	listint_t *temp = NULL;
 
-	count = 0;
-	current = *h;
-	headadd = NULL;
-	if (h != NULL)
+	if (!(h && *h))
+		return (nodeCount);
+	while (*h)
 	{
-		while (current != NULL)
+		nodeCount++;
+		if (*h > (*h)->next)
 		{
-			checker = headadd;
-			while (checker != NULL)
-			{
-				if (current == checker->address)
-				{
-					free(current);
-					free_listadd(headadd);
-					/*headadd = NULL;*/
-					*h = NULL;
-					return (count);
-				}
-				checker = checker->next;
-			}
-			killnode = current;
-			if (add_nodeaddress(&headadd, current) == NULL)
-			{
-				free_listadd(headadd);
-				exit(98);
-			}
-			current = current->next;
-			free(killnode);
-			count++;
+			temp = *h;
+			*h = (*h)->next;
+			free(temp);
 		}
-		free_listadd(headadd);
-		*h = NULL;/*headadd = NULL;*/
+		else
+		{
+			free(*h);
+			*h = NULL;
+		}
 	}
-	return (count);
+	*h = NULL;
+	return (nodeCount);
 }
