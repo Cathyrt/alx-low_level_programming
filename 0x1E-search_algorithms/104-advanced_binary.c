@@ -33,8 +33,26 @@ int advanced_binary(int *array, size_t size, int value)
 	if (array[mid] < value)
 	{
 		res = advanced_binary(array + mid + 1, size - mid - 1, value);
-		return (res == -1 ?(size_t)-1 : mid + 1 + res);
+		return (res == -1 ? (size_t)-1 : mid + 1 + res);
 	}
 	else
 		return (advanced_binary(array, mid + 1, value));
+}
+
+/**
+ * print_array - Prints an array of integers
+ * @array: Pointer to the first element of the array
+ * @size: Number of elements in the array
+ */
+void print_array(int *array, size_t size)
+{
+	size_t i;
+
+	for (i = 0; i < size; ++i)
+	{
+		printf("%d", array[i]);
+		if (i != size - 1)
+			printf(", ");
+	}
+	printf("\n");
 }
