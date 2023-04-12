@@ -2,14 +2,15 @@
 #include <math.h>
 
 /**
- * binary_search - Use a binary search to find the given value in an array
+ * binary_search_index - Searches a value in a sorted array using \
+ * a binary search.
  * @array: Array to search
  * @left: The index of the leftmost element of the subarray.
  * @right: The index of the rightmost element of the subarray.
  * @value: Value to search for
  * Return: the target value index, else -1
  */
-int binary_search(int *array, size_t left, size_t right, int value)
+int binary_search_index(int *array, size_t left, size_t right, int value)
 {
 	while (left <= right)
 	{
@@ -41,21 +42,20 @@ int binary_search(int *array, size_t left, size_t right, int value)
  */
 int exponential_search(int *array, size_t size, int value)
 {
-	if (array == NULL || size == 0)
-		return (-1);
+	size_t bound = 1, left = bound / 2,
+	       right = fmin(bound, size - 1);
 
-	int bound = 1;
+	if (array == NULL || size == 0)
+	{
+		return (-1);
+	}
 
 	while (bound < size && array[bound] < value)
 	{
-		printf("Checked value at index %d: %d\n", bound, array[bound]);
+		printf("Comparing value %d at index %lu", array[bound], bound);
 		bound *= 2;
 	}
 
-	int left = bound / 2;
-	int right = fmin(bound, size - 1);
-
-	printf("New range: [%d, %d]\n", left, right);
-
-	return (binary_search(array, left, right, value));
+	printf("Performing binary search on range [%lu, %lu]\n", left, right);
+	return (binary_search_index(array, left, right, value));
 }
