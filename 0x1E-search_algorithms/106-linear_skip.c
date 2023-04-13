@@ -5,35 +5,35 @@
  *
  * @list: input list
  * @value: value to search in
- * Return: index of the number
+ * Return: node containing the value, or NULL if not found
  */
 skiplist_t *linear_skip(skiplist_t *list, int value)
 {
-	skiplist_t *next, *current;
+	skiplist_t *start;
 
 	if (list == NULL)
 		return (NULL);
 
-	next = list;
+	start = list;
 
 	do {
-		list = next;
-		current = next->express;
+		list = start;
+		start = start->express;
 		printf("Value checked at index ");
-		printf("[%d] = [%d]\n", (int)next->index, next->n);
-	} while (next->express && next->n < value);
+		printf("[%d] = [%d]\n", (int)start->index, start->n);
+	} while (start->express && start->n < value);
 
-	if (current->express == NULL)
+	if (start->express == NULL)
 	{
-		list = current;
-		while (current->next)
-			current = current->next;
+		list = start;
+		while (start->next)
+			start = start->next;
 	}
 
 	printf("Value found between indexes ");
-	printf("[%d] and [%d]\n", (int)list->index, (int)current->index);
+	printf("[%d] and [%d]\n", (int)list->index, (int)start->index);
 
-	while (list != current->next)
+	while (list != start->next)
 	{
 		printf("Value checked at index [%d] = [%d]\n", (int)list->index, list->n);
 		if (list->n == value)
