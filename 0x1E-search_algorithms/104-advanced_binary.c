@@ -1,58 +1,63 @@
 #include "search_algos.h"
 
 /**
- * advanced_binary - Searches for a value in a sorted array of integers.
- * @array: A pointer to the first element of the array to search in.
- * @size: The number of elements in the array.
- * @value: The value to search for.
+ * binary_search_rec - searches for a value in an array of
+ * integers using the Binary search algorithm
  *
- * Return: The first index of the value in the array, otherwise -1.
+ * @array: input array
+ * @size: size of the array
+ * @value: value to search for
+ *
+ * Return: index of the value, or -1 if not found
  */
-int advanced_binary(int *array, size_t size, int value)
+int binary_search_rec(int *array, size_t size, int value)
 {
-	size_t i, mid;
-	int res;
+	size_t mid = size / 2;
+	size_t i;
 
 	if (array == NULL || size == 0)
 		return (-1);
 
-	printf("Searching in array: ");
+	printf("Searching in array");
+
 	for (i = 0; i < size; i++)
-		printf("%d%s", array[i], i == size - 1 ? "" : ", ");
+		printf("%s %d", (i == 0) ? ":" : ",", array[i]);
 
-	mid = (size - 1) / 2;
+	printf("\n");
 
-	if (array[mid] == value)
+	if (mid && size % 2 == 0)
+		mid--;
+
+	if (value == array[mid])
 	{
-		if (mid == 0 || array[mid - 1] != value)
-			return (mid);
+		if (mid > 0)
+			return (binary_search_rec(array, mid + 1, value));
+		return ((int)mid);
 	}
-	if (size == 1)
-		return (-1);
 
-	if (array[mid] < value)
-	{
-		res = advanced_binary(array + mid + 1, size - mid - 1, value);
-		return (res == -1 ? (size_t)-1 : mid + 1 + res);
-	}
-	else
-		return (advanced_binary(array, mid + 1, value));
+	if (value < array[mid])
+		return (binary_search_rec(array, mid + 1, value));
+
+	mid++;
+	return (binary_search_rec(array + mid, size - mid, value) + mid);
 }
 
 /**
- * print_array - Prints an array of integers
- * @array: Pointer to the first element of the array
- * @size: Number of elements in the array
+ * advanced_binary - calls to binary_search_rec to return
+ * the index of the number
+ * @array: input array
+ * @size: size of the array
+ * @value: The value to search for.
+ * Return: The first index of the value in the array, otherwise -1.
  */
-void print_array(int *array, size_t size)
+int advanced_binary(int *array, size_t size, int value)
 {
-	size_t i;
+	int index;
 
-	for (i = 0; i < size; ++i)
-	{
-		printf("%d", array[i]);
-		if (i != size - 1)
-			printf(", ");
-	}
-	printf("\n");
+	index = binary_search_rec(array, size, value);
+
+	if (index >= 0 && array[index] != value)
+		return (-1);
+
+	return (index);
 }
